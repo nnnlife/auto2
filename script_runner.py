@@ -33,6 +33,13 @@ class ScriptRunner(QThread):
         self.commands.clear()
         self.commands = self._get_commands(script)
 
+
+    def send_test_to_arduino(self):
+        time.sleep(3)
+        msg = b'\x02\x03\x00'+ b'\n'
+        print('send test data')
+        self.aduino.write(msg)
+
     def key_input(self, k):
         msg = b'\x02\x04\x01' + k.encode() + b'\n'
         print('key_input', k, len(msg), msg)
@@ -98,4 +105,4 @@ class ScriptRunner(QThread):
 
 if __name__ == '__main__':
     s = ScriptRunner()
-    s.set_script('(123,234,UP)(!)(D)(234,642,CLICK)')
+    s.send_test_to_arduino()
